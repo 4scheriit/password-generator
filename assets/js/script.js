@@ -11,41 +11,43 @@ var special = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "~"];
 window.alert("Generate a random password based on your criteria, press \"generate password\" to start!");
 
 //Function for password length
-function passLength()
+function getLength()
 {
   // Prompt user for password length
-  var userLength = window.prompt("Choose password length between 8 and 128 characters");
+  var setLength = window.prompt("Choose password length between 8 and 128 characters");
 
   // Convert user input to int
-  userLength = parseInt(userLength);
+  setLength = parseInt(setLength);
 
   // Check if user has input the proper conditions
-  if (userLength === "" || userLength === null) 
+  if (setLength === "" || setLength === null) 
   {
     window.alert("You need to provide a number! Please try again.");
-    return passLength();
+    return getLength();
   }
-  else if (userLength < 8 || userLength > 128)
+  else if (setLength < 8 || setLength > 128)
   {
     window.alert("You need to provide a number between 8 and 128! Please try again.");
-    return passLength();
+    return getLength();
   }
-  else if (!Number.isInteger(userLength))
+  else if (!Number.isInteger(setLength))
   {
     window.alert("You need to provide a number! Please try again.");
-    return passLength();
+    return getLength();
   }
 
-  return userLength
+  return setLength
 }
 
 // Function for user to select password criteria
-function userCriteria()
+function getCriteria()
 {
   var userUpper = confirm("Add upper case letters to password? Cancel for no.");
   var userLower = confirm("Add lower case letters to password? Cancel for no.");
   var userNumeric  = confirm("Add numbers to password? Cancel for no");
   var userSpecial = confirm("Add special characters to password? Cancel for no");
+
+  // Variable to store boolean values of user criteria
   var criteria =
   {
     userUpper: userUpper,
@@ -58,10 +60,63 @@ function userCriteria()
   if ((!userUpper) && (!userLower) && (!userNumeric) && (!userSpecial))
   {
     window.alert("You need to select at least one option!")
-    return userCriteria();
+    return getCriteria();
   }
 
   return criteria;
+}
+
+// Function to generate password
+function generatePassword() 
+{
+  
+  var userLength = getLength();
+  var userCriteria = getCriteria();
+
+  // Create an empty array to fill with user criteria
+  var passArray = [];
+  var passString = "";
+
+  // Check which user criteria was selected and add it to the password array
+  if (userCriteria.userUpper) 
+  {
+    for (var i of upper)
+    {
+      passArray.push(i);
+    }
+  }
+
+  if (userCriteria.userLower) 
+  {
+    for (var i of lower)
+    {
+      passArray.push(i);
+    }
+  }
+
+  if (userCriteria.userNumeric) 
+  {
+    for (var i of numeric)
+    {
+      passArray.push(i);
+    }
+  }
+
+  if (userCriteria.userSpecial) 
+  {
+    for (var i of special)
+    {
+      passArray.push(i);
+    }
+  }
+
+  // Generate the password
+  for (var i = 0; i < userLength; i++) 
+  {
+    passString += passArray[Math.floor(Math.random() * passArray.length)]; 
+  }
+
+  return passString;
 }
 
 // Write password to the #password input
