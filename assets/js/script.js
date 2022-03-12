@@ -8,10 +8,10 @@ var numeric = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 var special = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "~"];
 
 // Inform user on how to use password gen
-window.alert("Generate a random password based on your criteria, press \"generate password\" to start!")
+window.alert("Generate a random password based on your criteria, press \"generate password\" to start!");
 
 //Function for password length
-var passLength = function()
+function passLength()
 {
   // Prompt user for password length
   var userLength = window.prompt("Choose password length between 8 and 128 characters");
@@ -37,6 +37,31 @@ var passLength = function()
   }
 
   return userLength
+}
+
+// Function for user to select password criteria
+function userCriteria()
+{
+  var userUpper = confirm("Add upper case letters to password? Cancel for no.");
+  var userLower = confirm("Add lower case letters to password? Cancel for no.");
+  var userNumeric  = confirm("Add numbers to password? Cancel for no");
+  var userSpecial = confirm("Add special characters to password? Cancel for no");
+  var criteria =
+  {
+    userUpper: userUpper,
+    userLower: userLower,
+    userNumeric: userNumeric,
+    userSpecial: userSpecial
+  }
+  
+  // Check if user has selected at least one option
+  if ((!userUpper) && (!userLower) && (!userNumeric) && (!userSpecial))
+  {
+    window.alert("You need to select at least one option!")
+    return userCriteria();
+  }
+
+  return criteria;
 }
 
 // Write password to the #password input
