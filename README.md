@@ -1,4 +1,4 @@
-# my-portfolio
+# Password Generator
 
 ## Description
 
